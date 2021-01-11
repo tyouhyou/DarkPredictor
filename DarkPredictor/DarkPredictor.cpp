@@ -1,4 +1,4 @@
-#include "DarkPredictor.hpp"
+#include "dpredictor.h"
 #include "cxxlog.hpp"
 #include "stopwatch.hpp"
 
@@ -45,7 +45,11 @@ void DarkPredictor::Destroy()
 	}
 }
 
-std::vector<predict_result> DarkPredictor::Predict(const char* image_data, const int image_width, const int image_height, const int channels)
+std::vector<predict_result> DarkPredictor::Predict(
+	const char* image_data, 
+	const int image_width, 
+	const int image_height, 
+	const int channels)
 {
 	image img = make_image(image_width, image_height, channels);
 	copy_image_from_bytes(img, const_cast<char*>(image_data));
@@ -164,6 +168,9 @@ std::vector<predict_result> DarkPredictor::Predict(const image &img)
 	}
 
 	IL << "Parsing results elasped: " << sw.wrap() << " micro seconds.";
+
+	free_detections(dets, nboxes);
+	free_image(sized);
 
 	return results;
 }

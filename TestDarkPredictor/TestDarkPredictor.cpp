@@ -1,6 +1,6 @@
 ﻿#include "opencv2/opencv.hpp"
 #include "cxxlog.hpp"
-#include "DarkPredictor.hpp"
+#include "dpredictor.h"
 
 using namespace zb;
 
