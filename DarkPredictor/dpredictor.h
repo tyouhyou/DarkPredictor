@@ -11,8 +11,10 @@
 #ifndef EXPORT
 #if defined(_MSC_VER)
 #define EXPORT __declspec(dllexport)
+#define CDECL __cdecl
 #else
 #define EXPORT __attribute__((visibility("default")))
+#define CDECL __attribute__ ((cdecl))
 #endif
 
 struct predict_result
@@ -59,14 +61,14 @@ namespace zb
 extern "C" {
 #endif
 
-typedef void (*predict_result_handler)(predict_result*, int);
+typedef void* (*predict_result_handler)(predict_result*, int);
 
-EXPORT void* create_predictor();
-EXPORT void load(void* predictor, char* config_file, char* weights_file);
-EXPORT void set_log(void* predictor, char* log_file);
-EXPORT void destroy_predictor(void* predictor);
-EXPORT void predict_image_file(void* predictor, char* image_file, predict_result_handler result_handler);
-EXPORT void predict_image(void* predictor, char* image_data, int image_width, int image_height, int channels, predict_result_handler result_handler);
+EXPORT void* CDECL create_predictor();
+EXPORT void CDECL load(void* predictor, char* config_file, char* weights_file);
+EXPORT void CDECL set_log(void* predictor, char* log_file);
+EXPORT void CDECL destroy_predictor(void* predictor);
+EXPORT void* CDECL predict_image_file(void* predictor, char* image_file, predict_result_handler result_handler);
+EXPORT void* CDECL predict_image(void* predictor, char* image_data, int image_width, int image_height, int channels, predict_result_handler result_handler);
 
 #ifdef __cplusplus
 }

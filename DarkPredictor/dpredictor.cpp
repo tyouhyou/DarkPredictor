@@ -31,14 +31,14 @@ void destroy_predictor(void* predictor)
 	}
 }
 
-void predict_image_file(void *predictor, char* image_file, predict_result_handler result_handler)
+void* predict_image_file(void *predictor, char* image_file, predict_result_handler result_handler)
 {
 	auto rsts = static_cast<zb::DarkPredictor*>(predictor)->Predict(image_file);
-	result_handler(rsts.data(), (int)rsts.size());
+	return result_handler(rsts.data(), (int)rsts.size());
 }
 
-void predict_image(void* predictor, char* image_data, int image_width, int image_height, int channels, predict_result_handler result_handler)
+void* predict_image(void* predictor, char* image_data, int image_width, int image_height, int channels, predict_result_handler result_handler)
 {
 	auto rsts = static_cast<zb::DarkPredictor*>(predictor)->Predict(image_data, image_width, image_height, channels);
-	result_handler(rsts.data(), (int)rsts.size());
+	return result_handler(rsts.data(), (int)rsts.size());
 }
